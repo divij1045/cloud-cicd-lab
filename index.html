@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Task Tracker</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;background:#f5f7fb;color:#222}
+.panel{background:white;padding:24px;border-radius:12px;box-shadow:0 3px 14px #0001}
+h1{margin-top:0;color:#253b70}form.add{display:flex;gap:8px;margin:20px 0}
+input{flex:1;padding:11px;border:1px solid #ccd2df;border-radius:6px}
+button{padding:10px 14px;border:0;border-radius:6px;background:#2d5be3;color:white;cursor:pointer}
+li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #eee}
+.done{text-decoration:line-through;color:#777}.small{color:#666;font-size:14px}
+</style>
+</head>
+<body><main class="panel">
+<h1>Student Task Tracker</h1><p>Organize your study tasks and track your progress.</p>
+<form class="add" action="/add" method="post"><input name="title" placeholder="Enter a study task" required><button type="submit">Add task</button></form>
+<h2>My tasks</h2><ul>
+{% for task in tasks %}
+<li><span class="{{ 'done' if task.done else '' }}">{{ task.title }}</span>
+<form action="/toggle/{{ task.id }}" method="post"><button type="submit">{{ 'Mark pending' if task.done else 'Mark complete' }}</button></form></li>
+{% else %}<li>No tasks yet. Add your first task above.</li>{% endfor %}
+</ul><p class="small">Health check: <a href="/health">/health</a> · Version: <a href="/version">/version</a></p>
+</main></body></html>
